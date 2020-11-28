@@ -1,0 +1,8 @@
+CREATE TABLE hockeyPlayer(
+  player_number INTEGER NOT NULL,
+  full_name TEXT NOT NULL
+);
+
+CREATE INDEX hockeyPlayer_full_name ON hockeyPlayer(full_name);
+
+INSERT INTO hockeyPlayer(player_number, full_name) VALUES (15, 'Test text clip');
