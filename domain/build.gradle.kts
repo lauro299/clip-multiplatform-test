@@ -44,7 +44,11 @@ kotlin {
             }
         }
         val androidTest by getting
-        val iosMain by getting
+        val iosMain by getting{
+            dependencies{
+                implementation(SqlDelight.nativeDriver)
+            }
+        }
         val iosTest by getting
     }
 }
