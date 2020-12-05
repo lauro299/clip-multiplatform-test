@@ -6,3 +6,9 @@ CREATE TABLE hockeyPlayer(
 CREATE INDEX hockeyPlayer_full_name ON hockeyPlayer(full_name);
 
 INSERT INTO hockeyPlayer(player_number, full_name) VALUES (15, 'Test text clip');
+
+insertItem:
+INSERT OR REPLACE INTO hockeyPlayer(full_name, player_number) VALUES (?,?);
+
+selectAll:
+SELECT * FROM hockeyPlayer;

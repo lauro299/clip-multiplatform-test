@@ -1,10 +1,17 @@
 package mx.clip.db.domain
 
+import com.squareup.sqldelight.Query
 import com.squareup.sqldelight.TransacterImpl
 import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.internal.copyOnWriteList
+import kotlin.Any
 import kotlin.Int
+import kotlin.Long
+import kotlin.String
+import kotlin.collections.MutableList
 import kotlin.reflect.KClass
 import mx.clip.db.ClipDataBase
+import mx.clip.test.sqldelight.mx.clip.db.HockeyPlayer
 import mx.clip.test.sqldelight.mx.clip.db.PlayerQueries
 
 internal val KClass<ClipDataBase>.schema: SqlDriver.Schema
@@ -46,4 +53,31 @@ private class ClipDataBaseImpl(
 private class PlayerQueriesImpl(
   private val database: ClipDataBaseImpl,
   private val driver: SqlDriver
-) : TransacterImpl(driver), PlayerQueries
+) : TransacterImpl(driver), PlayerQueries {
+  internal val selectAll: MutableList<Query<*>> = copyOnWriteList()
+
+  override fun <T : Any> selectAll(mapper: (player_number: Long, full_name: String) -> T): Query<T>
+      = Query(728636091, selectAll, driver, "Player.sq", "selectAll", "SELECT * FROM hockeyPlayer")
+      { cursor ->
+    mapper(
+      cursor.getLong(0)!!,
+      cursor.getString(1)!!
+    )
+  }
+
+  override fun selectAll(): Query<HockeyPlayer> = selectAll { player_number, full_name ->
+    mx.clip.test.sqldelight.mx.clip.db.HockeyPlayer(
+      player_number,
+      full_name
+    )
+  }
+
+  override fun insertItem(full_name: String, player_number: Long) {
+    driver.execute(-559717258,
+        """INSERT OR REPLACE INTO hockeyPlayer(full_name, player_number) VALUES (?,?)""", 2) {
+      bindString(1, full_name)
+      bindLong(2, player_number)
+    }
+    notifyQueries(-559717258, {database.playerQueries.selectAll})
+  }
+}

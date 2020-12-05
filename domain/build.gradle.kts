@@ -27,6 +27,10 @@ kotlin {
     sourceSets {
         val commonMain by getting{
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"){
+                    isForce=true
+                }
+                implementation(Serialization.core)
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
             }
