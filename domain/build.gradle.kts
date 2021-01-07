@@ -33,6 +33,7 @@ kotlin {
                 implementation(Serialization.core)
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
+                implementation("io.ktor:ktor-client-core:${Versions.ktor}")
             }
         }
         val commonTest by getting {
@@ -51,6 +52,7 @@ kotlin {
         val iosMain by getting{
             dependencies{
                 implementation(SqlDelight.nativeDriver)
+                implementation("io.ktor:ktor-client-ios:${Versions.ktor}")
             }
         }
         val iosTest by getting

@@ -1,0 +1,16 @@
+CREATE TABLE catalogItem(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    price REAL NOT NULL
+);
+
+insertItem:
+INSERT INTO catalogItem(name, price) VALUES (?, ?);
+
+selectAll:
+SELECT * FROM catalogItem;
+
+deleteItem:
+DELETE FROM catalogItem WHERE id = ?;
+
+
