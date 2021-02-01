@@ -39,13 +39,11 @@ fun itemCatalog(item:CatalogItem) {
 }
 
 @Composable
-fun viewItemsCatalog(navController: NavController){
-    val catalogViewModel: CatalogItemViewModel = viewModel()
+fun viewItemsCatalog(navController: NavController, catalogViewModel: CatalogItemViewModel){
     catalogViewModel.list?.collectAsState(initial = emptyList())
             ?.value?.let {
                 itemsCatalogList(items = it, navController = navController)
             }
-    floatButton(catalogViewModel)
 }
 
 @Composable
